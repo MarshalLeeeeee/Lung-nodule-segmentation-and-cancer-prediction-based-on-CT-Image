@@ -1,0 +1,98 @@
+\documentclass[hyperref]{article}
+%MS%%%%%%%%%%%%%%%%%%%% Article Format %%%%%%%%%%%%%%%%%
+%+++++++++++++++++++++ Usepackage +++++++++++++++%%
+\usepackage{graphicx} %% Package for Figure
+\usepackage{float} %% Package for Float
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{mathtools}
+\usepackage{indentfirst}
+\usepackage[thmmarks,amsmath]{ntheorem} %% If amsmath is applied, then amsma is necessary
+\usepackage{bm} %% Bold Mathematical Symbols
+\usepackage[colorlinks,linkcolor=cyan,citecolor=cyan]{hyperref}
+\usepackage{extarrows}
+\usepackage[hang,flushmargin]{footmisc} %% Let the footnote not indentation
+\usepackage[square,comma,sort&compress,numbers]{natbib} %% Sort of References
+\usepackage{mathrsfs} %% Swash letter
+\usepackage[font=footnotesize,skip=0pt,textfont=rm,labelfont=rm]{caption,subcaption} 
+%% Format of Caption for Tab. and Fig.
+\usepackage{booktabs} %% tables with three lines
+\usepackage{tocloft}
+%+++++++++++++++ Proof etc. +++++++++++++++++++++++++%%
+{%% Environment of Proof
+    \theoremstyle{nonumberplain}
+    \theoremheaderfont{\bfseries}
+    \theorembodyfont{\normalfont}
+    \theoremsymbol{\mbox{$\Box$}}
+    \newtheorem{proof}{Proof}
+}
+
+\usepackage{theorem}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}{Lemma}[section]
+\newtheorem{definition}{Definition}[section]
+\newtheorem{assumption}{Assumption}[section]
+\newtheorem{example}{Example}[section]
+\newtheorem{corollary}{Corollary}[section]
+{%% Environment of Remark
+    \theoremheaderfont{\bfseries}
+    \theorembodyfont{\normalfont}
+    \newtheorem{remark}{Remark}[section]
+}
+%\numberwithin{equation}{section} %% Number of Equation
+%++++++++++++++++++++++++++++++++ Page format ++++++++++++++++++++++++++%%
+\graphicspath{{figure/}}                                 %% Path of Figures
+\usepackage[a4paper]{geometry}                           %% Paper size
+\geometry{left=2.5cm,right=2.5cm,top=2.5cm,bottom=2.5cm} %% Margin
+\linespread{1.2}                                         %% Line Spread
+%MS%%%%%%%%%%%%%%%%%%%%%%%%%%%% End Format %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%MS%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%MS                                         %%
+%MS        The Main Body begins here        %%
+%MS                                         %%
+%MS%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%MS+++++++++++++++++++++++ Title +++++++++++++++++++
+\begin{document}
+\title{\bf Virtual Reality - Final Project Proposal Template} 
+\author{\sffamily Lung nodule segmentation and cancer prediction based on CT Image\\}
+%\renewcommand{\thefootnote}{\fnsymbol{footnote}}
+%\footnotetext[1]{Corresponding author. }
+\maketitle
+
+%MS+++++++++++++++++++++ Member List +++++++++++++++++++++++++
+\section{Member List}
+{\noindent \large{Li Minchao \hspace{1.65cm}515030910361}\\}
+{\noindent \large{\hspace{1cm} Zhang Yiheng \hspace{1.03cm} 515030910216}\\}
+{\noindent \large{\hspace{1cm} Wang Yiqing  \hspace{1.2cm} 515030910456}}
+%MS++++++++++++++++++++++++++++++ Main body ++++++++++++++++++++
+\section{Problem Statement}
+We will develop a computer-aided detection and diagnosis system to implement lung nodule segmentation and cancer prediction based on CT images. We will probably train a deep neural network with CT images as the input to tell if patiants have some benign and malignant nodules and segment the malignant parts out.
+\section{Problem Description}
+With the depletionl of the demographic bonus, China is facing the threats of deficit of labor force, including medical care. To counter the deficiency of the doctors, computer-aided diagnosis system may help. Thus, we aim to design a lung nodule segmentation and cancer prediction model based on CT images using deep learning, which may also be helpful for other image based diagnosis system. We will collect data and training our network referring to some state-of-art techniques and network. We hope we can achieve higher accuracy or higher efficiency.
+\section{Project Goals and Objectives/Deliverables}
+We will refer to the state-of-art networks in image processing, like vgg, and some networks designed for medical use. We will take advantage of each one and combine them into one to achieve higher accuracy or higher efficiency.
+\section{Project Scope}
+We will focus on optimizing the structure and the paraments of the model to achieve a higher performance. We will not improve the performance on hardware layer, like developing our model on some exclusive hardware platform or developing a pipeline technique.
+\section{Success Factors and Benefits}
+In the application layer, this project will slightly develop the efficiency of the process of diagnosis of lung nodule segmentation and cancer prediction, which relieve the burden of doctors. In the technique layer, this project will introduce a framework for image based medical analysis for the future development.
+\section{Timeline}
+\begin{tabular}{c|c}
+March & collect the training data\\
+\hline
+April & make the framework of the net\\
+\hline
+May   & improve the accuacy of the detection\\
+\hline
+June  & improve the segmentation anf overall performance\\
+\end{tabular}
+\section{Assumptions}
+\subsection{Data Scale}
+The number of labeled data collected may be restricted. We may probably to enlarge our dataset by some techniques like mirror, noise or some other methods. Still, we can label it manually.
+\subsection{Hardware}
+Some deep learning network relies on the performance of powerful GPU. If so, we may run our network on some server.
+\section{Limitations/Restrictions}
+TODO
+
+\end{document}
