@@ -56,7 +56,7 @@
 %MS+++++++++++++++++++++++ Title +++++++++++++++++++
 \begin{document}
 \title{\bf Virtual Reality - Final Project Proposal Template} 
-\author{\sffamily Lung nodule segmentation and cancer prediction based on CT Image\\}
+\author{\textit{Lung nodule segmentation and cancer prediction based on CT Image}}
 %\renewcommand{\thefootnote}{\fnsymbol{footnote}}
 %\footnotetext[1]{Corresponding author. }
 \maketitle
@@ -68,30 +68,41 @@
 {\noindent \large{\hspace{1cm} Wang Yiqing  \hspace{1.2cm} 515030910456}}
 %MS++++++++++++++++++++++++++++++ Main body ++++++++++++++++++++
 \section{Problem Statement}
-We will develop a computer-aided detection and diagnosis system to implement lung nodule segmentation and cancer prediction based on CT images. We will probably train a deep neural network with CT images as the input to tell if patients have some benign and malignant nodules and segment the malignant parts out.
+We will develop a computer-aided detection and diagnosis system to implement lung nodule segmentation and cancer prediction based on CT images. A deep neural network with CT images as the input will be developed and trained by us to tell if patients have some benign and malignant nodules and segment the malignant parts out.
 
 \section{Problem Description}
 With the depletion of the demographic bonus, China is facing the threats of deficit of labor force, including medical care. To counter the deficiency of the doctors, computer-aided diagnosis system may help. Thus, we aim to design a lung nodule segmentation and cancer prediction model based on CT images using deep learning, which may also be helpful for other image based diagnosis system. We will collect data and training our network referring to some state-of-art techniques and network. We hope we can achieve higher accuracy or higher efficiency.
 
 \section{Project Goals and Objectives/Deliverables}
-We will refer to the state-of-art networks in image processing, like U-Net, and some networks designed for medical use. We will take advantage of each one and combine them into one to achieve higher accuracy or higher efficiency.
+\begin{itemize}
+	\item Better results compared to some state-of-art networks in image segmentation, especially for medical use
+	\item Combined network features to accomplish multiple tasks at one time
+\end{itemize}
 
 \section{Project Scope}
-We will focus on optimizing the structure and the parameters of the model to achieve a higher performance. We will not improve the performance on hardware layer, like developing our model on some exclusive hardware platform or developing a pipeline technique.
+Our focus is optimizing the structure and parameters of the model to achieve better performance and we will not improve the performance on hardware layer, like developing our model on some exclusive hardware platform or developing some advanced pipeline technique.
 
 \section{Success Factors and Benefits}
-In the application layer, this project will slightly develop the efficiency of the process of diagnosis of lung nodule segmentation and cancer prediction, which relieve the burden of doctors. In the technique layer, this project will introduce a framework for image based medical analysis for the future development.
+In the application layer, this project is aimed to improve the efficiency of the process of lung nodule diagnosis and segmentation, and of cancer prediction, which will alleviate the burden of doctors. 
+
+In the technique layer, this project will introduce a framework for image based medical analysis for the future development.
 
 \section{Timeline}
-\begin{tabular}{c|c}
-March & collect the training data\\
-\hline
-April & make the framework of the net\\
-\hline
-May   & improve the accuracy of the detection\\
-\hline
-June  & improve the segmentation and overall performance\\
-\end{tabular}
+\begin{center}
+	\begin{tabular}{c|c}
+		Month & Goal \\
+		\hline
+		March & collect the training data\\
+		\hline
+		April & make the framework of the net\\
+		\hline
+		May   & improve the accuracy of the detection\\
+		\hline
+		<<<<<<< HEAD
+		June  & improve the segmentation anf overall performance\\
+		\hline
+	\end{tabular}
+\end{center}
 
 \section{Assumptions}
 \subsection{Data Scale}
@@ -100,6 +111,6 @@ The number of labeled data collected may be restricted. We may probably to enlar
 Some deep learning network relies on the performance of powerful GPU. If so, we may run our network on some servers.
 
 \section{Limitations/Restrictions}
-Lung analysis techniques have been improved over the last decade. However, there still are issues to be solved such as developing new and better techniques of contrast enhancement and selecting better criteria for performance evaluation is also needed. 
+Lung analysis techniques have been improved over the last decade. However, there still are issues to be solved such as developing new and better techniques of contrast enhancement and selecting a appropriate criteria for performance evaluation is also critical. 
 
 \end{document}
