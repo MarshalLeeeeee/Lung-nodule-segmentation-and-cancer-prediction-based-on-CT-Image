@@ -15,7 +15,7 @@ def download_file_from_google_drive(id,destination):
 		with open(destination, 'wb') as f:
 			for chunk in response.iter_content(CHUNK_SIZE):
 				if chunk: # fileter out keep-alive new chunks
-				f.write(chunk)
+					f.write(chunk)
 
 	URL = 'https://docs.google.com/uc?export=download'
 
