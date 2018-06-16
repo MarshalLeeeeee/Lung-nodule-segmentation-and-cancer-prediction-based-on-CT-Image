@@ -285,35 +285,3 @@ def get_train_batch(batch_filename):
 
     return np.array(batch_array),np.array(batch_label)
 
-
-if __name__ =='__main__':
-
-    #base_dir = '/home/ubuntu/data/'
-    #annatation_file = '/home/ubuntu/data/CSVFILES/annotations.csv'
-    #candidate_file = '/home/ubuntu/data/CSVFILES/candidates.csv'
-    #plot_output_path = '/home/ubuntu/data/output'
-    #normalization_output_path = '/home/ubuntu/data/train-3d'
-    #est_path = '/home/ubuntu/data/test-3d'
-
-    for i in range(0,9):
-        print('start precessing subset: ', i)
-        dcim_path = base_dir +'subset'+str(i)+"/"
-        extract_real_cubic_from_mhd(dcim_path, annatation_file, plot_output_path,normalazation_output_path)
-        extract_fake_cubic_from_mhd(dcim_path, candidate_file, plot_output_path, normalazation_output_path)
-        print('end precessing subset: ', i)
-        print('-'*10)
-
-    for i in range(9,10):
-        print('start precessing subset: ', i)
-        dcim_path = base_dir +'subset'+str(i)+"/"
-        extract_real_cubic_from_mhd(dcim_path, annatation_file, plot_output_path,test_path)
-        extract_fake_cubic_from_mhd(dcim_path, candidate_file, plot_output_path,test_path)
-        print('end precessing subset: ', i)
-        print('-'*10)
-        #print("  #######  extract cubic from subset%d finished    #######"%i)
-    print("finished!...")
-
-
-
-
-
