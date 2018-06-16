@@ -6,8 +6,10 @@ Note:
 """
 
 from __future__ import print_function
-
+import os
+from glob import glob
 import numpy as np
+import matplotlib.pyplot as plt
 from keras.models import Model
 from keras.layers import Input, merge, Convolution2D, MaxPooling2D, UpSampling2D
 from keras.optimizers import Adam
@@ -15,7 +17,11 @@ from keras.optimizers import SGD
 from keras.callbacks import ModelCheckpoint, LearningRateScheduler
 from keras import backend as K
 
-WORKING_PATH = "/home/ubuntu/data/output/"
+#WORKING_PATH = "/home/marshallee/Documents/lung/output/"
+
+TRAIN_PATH = '/home/ubuntu/data/train_pre/'
+VAL_PATH = '/home/ubuntu/data/val_pre/'
+TEST_PATH = '/home/ubuntu/data/test_pre/'
 IMG_ROWS = 512
 IMG_COLS = 512
 
@@ -83,40 +89,77 @@ def get_unet():
 
     return model
 
+def generator(path,batch_size):
 
-def train_and_evaluate():
-    print('-'*30)
-    print('Loading and preprocessing train data...')
-    print('-'*30)
-    imgs_train = np.load(WORKING_PATH+"trainImages.npy").astype(np.float32)
-    imgs_mask_train = np.load(WORKING_PATH+"trainMasks.npy").astype(np.float32)
+    lung_mask_list = glob(path + 'final_lung_mask_*.npy')
+    nodule_mask_list = glob(path + 'final_nodule_mask_*.npy')
+    lung_mask_list.sort()
+    nodule_mask_list.sort()
 
-    imgs_test = np.load(WORKING_PATH+"testImages.npy").astype(np.float32)
-    imgs_mask_test_true = np.load(WORKING_PATH+"testMasks.npy").astype(np.float32)
-    
-    mean = np.mean(imgs_train)  # mean for data centering
-    std = np.std(imgs_train)  # std for data normalization
-    imgs_train -= mean  # images should already be standardized, but just in case
-    imgs_train /= std
+    flag = 0
+    start = 0
+    cnt = 0
 
-    mean_test = np.mean(imgs_test)  # mean for data centering
-    std_test = np.std(imgs_test)  # std for data normalization
-    imgs_test -= mean_test  # images should already be standardized, but just in case
-    imgs_test /= std_test
+    while (1):
+        
+        for i in range(len(lung_mask_list)):
+            lung_file = lung_mask_list[i]
+            nodule_file = nodule_mask_list[i]
+            lung = np.load(lung_file)
+            nodule = np.load(nodule_file)
 
-    print('-'*30)
-    print('Creating and compiling model...')
-    print('-'*30)
+            if(flag):
+                lung_train = np.concatenate((lung_train,lung[0:batch_supply]),axis=0).reshape([batch_size,1,512,512])
+                nodule_train = np.concatenate((nodule_train,nodule[0:batch_supply]),axis=0).reshape([batch_size,1,512,512])
+                yield (lung_train / 255.0, nodule_train / 255.0)
+                start = batch_supply
+                flag = 0
+            while(start + batch_size < len(lung)):
+                lung_train = lung[start:start+batch_size].reshape([batch_size,1,512,512])
+                nodule_train = nodule[start:start+batch_size].reshape([batch_size,1,512,512])
+                yield (lung_train / 255.0, nodule_train / 255.0)
+                start += batch_size
+            if(start + batch_size == len(lung)):
+                lung_train = lung[start:start+batch_size].reshape([batch_size,1,512,512])
+                nodule_train = nodule[start:start+batch_size].reshape([batch_size,1,512,512])
+                yield (lung_train / 255.0, nodule_train / 255.0)
+                flag = 0
+                start = 0
+            else:
+                lung_train = lung[start:]
+                nodule_train = nodule[start:]
+                batch_supply = batch_size - (len(lung)-start)
+                start = 0
+                flag = 1
+
+
+def train_generator(batch_size):
     model = get_unet()
-
-    # Saving weights to unet.hdf5 at checkpoints
-    model_checkpoint = ModelCheckpoint('unet.hdf5', monitor='loss', save_best_only=True)
+    print('model compileover ...')
+    model.fit_generator(generator(TRAIN_PATH,batch_size),steps_per_epoch = 4540, epochs = 2, verbose = 1, validation_data=generator(VAL_PATH,batch_size),validation_steps=650)
     
-    print('-'*30)
-    print('Fitting model...')
-    print('-'*30)
-    model.fit(imgs_train, imgs_mask_train, batch_size=2, nb_epoch=20, verbose=1, shuffle=True, callbacks=[model_checkpoint])
-    print('Fitting ends...')
+    data_pred = np.load(TEST_PATH+'final_lung_mask_9.npy').reshape([1007,1,512,512])
+    nodule_true = np.load(TEST_PATH+'final_nodule_mask_9.npy').reshape([1007,1,512,512])
+
+    '''
+    nodule_pred = model.predict(data_pred)
+
+    fig,ax = plt.subplots(2,2,figsize=[8,8])
+    ax[0,0].imshow(data_pred[0],cmap='gray')
+    ax[0,1].imshow(nodule_true[0],cmap='gray')
+    ax[1,0].imshow(data_pred[0]*nodule_true[0],cmap='gray')
+    plt.show()
+
+    fig,ax = plt.subplots(2,2,figsize=[8,8])
+    ax[0,0].imshow(data_pred[0],cmap='gray')
+    ax[0,1].imshow(nodule_pred[0],cmap='gray')
+    ax[1,0].imshow(data_pred[0]*nodule_pred[0],cmap='gray')
+    '''
+
+    print(model.evaluate(data_pred,nodule_true,batch_size=2,verbose=1))
+
+
     
 if __name__ == '__main__':
-    train_and_predict()
+    batch_size = 2
+    train_generator(batch_size)
