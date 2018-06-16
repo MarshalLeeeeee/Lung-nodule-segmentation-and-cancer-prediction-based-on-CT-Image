@@ -136,36 +136,32 @@ def create_nodule_mask(imagePath, cands, fcount, subsetnum,final_lung_mask,final
 
         new_origin = voxel_2_world([-upper_offset,-lower_offset,0],origin,new_spacing)
 
-        lung_img_512[z, upper_offset:-lower_offset,upper_offset:-lower_offset] = lung_img[z,:,:]
         lung_mask_512[z, upper_offset:-lower_offset,upper_offset:-lower_offset] = lung_mask[z,:,:]
         nodule_mask_512[z, upper_offset:-lower_offset,upper_offset:-lower_offset] = nodule_mask[z,:,:]
-        if(flag == 0 and np.sum(nodule_mask[z,:,:]) > 0.0):
-            i_start = z
-            print(i_start)
-            flag = 1
-        if(flag == 1 and np.sum(nodule_mask[z,:,:]) == 0.0):
-            i_end = z
-            print(i_end)
-            flag = 0
-            final_lung_mask = np.concatenate((final_lung_mask,lung_mask_512[i_start-1:i_end+1]),axis = 0)
-            final_nodule_mask = np.concatenate((final_nodule_mask,nodule_mask_512[i_start-1:i_end+1]),axis = 0)
+        '''if(flag == 0 and np.sum(nodule_mask[z,:,:]) > 0.0):
+                                    i_start = z
+                                    print(i_start)
+                                    flag = 1
+                                if(flag == 1 and np.sum(nodule_mask[z,:,:]) == 0.0):
+                                    i_end = z
+                                    print(i_end)
+                                    flag = 0
+                                    final_lung_mask = np.concatenate((final_lung_mask,lung_mask_512[i_start-1:i_end+1]),axis = 0)
+                                    final_nodule_mask = np.concatenate((final_nodule_mask,nodule_mask_512[i_start-1:i_end+1]),axis = 0)'''
 
-    #print('len: ', len(final_lung_mask))
-    #print(lung_mask_512.shape)
-    #print(img.shape)
-'''    i=83
+    '''    
+    i=83
     fig,ax = plt.subplots(2,2,figsize=[8,8])
     ax[0,0].imshow(lung_mask_512[i],cmap='gray')
     ax[0,1].imshow(nodule_mask_512[i],cmap='gray')
     ax[1,0].imshow(lung_mask_512[i]*nodule_mask_512[i],cmap='gray')
     ax[1,1].imshow(img[32],cmap='gray')
     plt.show()
-    exit(0)'''
-    return final_lung_mask,final_nodule_mask
+    '''
+    # return final_lung_mask,final_nodule_mask
     # save images.
-    #np.save(os.path.join(OUTPUT_PATH,"lung_img_%04d_%04d.npy" % (subsetnum, fcount)),lung_img_512)
-    #np.save(os.path.join(OUTPUT_PATH,"lung_mask_%04d_%04d.npy" % (subsetnum, fcount)),lung_mask_512)
-    #np.save(os.path.join(OUTPUT_PATH,"nodule_mask_%04d_%04d.npy" % (subsetnum, fcount)),nodule_mask_512)
+    np.save(os.path.join(OUTPUT_PATH,"lung_mask_%04d_%04d.npy" % (subsetnum, fcount)),lung_mask_512)
+    np.save(os.path.join(OUTPUT_PATH,"nodule_mask_%04d_%04d.npy" % (subsetnum, fcount)),nodule_mask_512)
 
 
 
