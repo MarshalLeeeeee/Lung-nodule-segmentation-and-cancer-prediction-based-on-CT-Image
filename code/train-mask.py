@@ -117,6 +117,9 @@ def train_and_evaluate():
     print('-'*30)
     model.fit(imgs_train, imgs_mask_train, batch_size=2, nb_epoch=20, verbose=1, shuffle=True, callbacks=[model_checkpoint])
     print('Fitting ends...')
+
+    print('start evaluation...')
+    print('evaluation result is: ', model.eva)
     
 if __name__ == '__main__':
     train_and_predict()

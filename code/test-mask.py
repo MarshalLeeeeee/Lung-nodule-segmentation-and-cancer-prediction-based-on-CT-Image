@@ -85,36 +85,6 @@ def get_unet():
     return model
 
 
-def train_and_predict():
-    print('-'*30)
-    print('Loading and preprocessing train data...')
-    print('-'*30)
-    imgs_train = np.load(WORKING_PATH+"trainImages.npy").astype(np.float32)
-    imgs_mask_train = np.load(WORKING_PATH+"trainMasks.npy").astype(np.float32)
-
-    imgs_test = np.load(WORKING_PATH+"testImages.npy").astype(np.float32)
-    imgs_mask_test_true = np.load(WORKING_PATH+"testMasks.npy").astype(np.float32)
-    
-    mean = np.mean(imgs_train)  # mean for data centering
-    std = np.std(imgs_train)  # std for data normalization
-
-    imgs_train -= mean  # images should already be standardized, but just in case
-    imgs_train /= std
-
-    print('-'*30)
-    print('Creating and compiling model...')
-    print('-'*30)
-    model = get_unet()
-
-    # Saving weights to unet.hdf5 at checkpoints
-    model_checkpoint = ModelCheckpoint('unet.hdf5', monitor='loss', save_best_only=True)
-    
-    print('-'*30)
-    print('Fitting model...')
-    print('-'*30)
-    model.fit(imgs_train, imgs_mask_train, batch_size=2, nb_epoch=20, verbose=1, shuffle=True,
-              callbacks=[model_checkpoint])
-
 def test():
     imgs_test = np.load(WORKING_PATH+"trainImages.npy").astype(np.float32)
     imgs_mask_test_true = np.load(WORKING_PATH+"trainMasks.npy").astype(np.float32)
