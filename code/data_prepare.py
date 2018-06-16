@@ -28,11 +28,10 @@ def get_filename(file_list, case):
         if case in f:
             return(f)
 
-def extract_real_cubic_from_mhd(dcim_path,annatation_file,plot_output_path,normalization_output_path):
+def extract_real_cubic_from_mhd(dcim_path,annatation_file,normalization_output_path):
     '''
       @param: dcim_path :                 the path contains all mhd file
       @param: annatation_file:            the annatation csv file,contains every nodules' coordinate
-      @param: plot_output_path:           the save path of extracted cubic of size 20x20x6,30x30x10,40x40x26 npy file(plot ),every nodule end up withs three size
       @param:normalization_output_path:   the save path of extracted cubic of size 20x20x6,30x30x10,40x40x26 npy file(after normalization)
     '''
     file_list=glob(dcim_path+"*.mhd")
@@ -91,11 +90,10 @@ def extract_real_cubic_from_mhd(dcim_path,annatation_file,plot_output_path,norma
                     traceback.print_exc()
 
 
-def extract_fake_cubic_from_mhd(dcim_path,candidate_file,plot_output_path,normalization_output_path):
+def extract_fake_cubic_from_mhd(dcim_path,candidate_file,normalization_output_path):
     '''
       @param: dcim_path :                 the path contains all mhd file
       @param: candidate_file:             the candidate csv file,contains every **fake** nodules' coordinate
-      @param: plot_output_path:           the save path of extracted cubic of size 20x20x6,30x30x10,40x40x26 npy file(plot ),every nodule end up withs three size
       @param:normalization_output_path:   the save path of extracted cubic of size 20x20x6,30x30x10,40x40x26 npy file(after normalization)
     '''
     file_list=glob(dcim_path+"*.mhd")
