@@ -1,3 +1,10 @@
+"""
+	a simple automatic script for download LUNA16 dataset from google drive
+	
+	Usage: python download.py 
+"""
+
+from __future__ import print_function
 import sys
 import os 
 from datetime import datetime

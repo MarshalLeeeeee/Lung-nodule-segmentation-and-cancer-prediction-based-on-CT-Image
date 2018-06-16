@@ -1,3 +1,7 @@
+"""
+	Project configuration
+	Pathes and train setting
+"""
 import os
 '''
 base_dir = '/home/ubuntu/data/'

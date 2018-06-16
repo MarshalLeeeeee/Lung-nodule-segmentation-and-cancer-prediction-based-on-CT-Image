@@ -1,8 +1,8 @@
 """
-Purpose: train a machine learning segmenter that can segment out the nodules on a given 2D patient CT scan slice
-Note:
-- this will train from scratch, with no preloaded weights
-- weights are saved to unet.hdf5 in the specified output folder
+    Purpose: train a machine learning segmenter that can segment out the nodules on a given 2D patient CT scan slice
+    Note:
+    - this will train from scratch, with no preloaded weights
+    - weights are saved to unet.hdf5 in the specified output folder
 """
 
 from __future__ import print_function
@@ -39,7 +39,11 @@ def dice_coef_np(y_true,y_pred):
     intersection = np.sum(y_true_f * y_pred_f)
     return (2. * intersection + SMOOTH) / (np.sum(y_true_f) + np.sum(y_pred_f) + SMOOTH)
 
+
 def get_unet():
+    """
+        U-net architecture
+    """
     inputs = Input((1,IMG_ROWS, IMG_COLS))
     conv1 = Convolution2D(32, 3, 3, activation='relu', border_mode='same')(inputs)
     conv1 = Convolution2D(32, 3, 3, activation='relu', border_mode='same')(conv1)

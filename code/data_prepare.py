@@ -1,7 +1,12 @@
 # -*- coding:utf-8 -*-
-'''
- LUNA2016 data prepare
-'''
+"""    
+    Prepare data for 3D CNN and some utility functions
+    (1) Extract positive and negative samples from mhd based on annotation 
+    (2) Check nan in data function
+    (3) Visulization 2D and 3D utilities
+    (4) Normalization and thresholding utilities
+    (5) Get train and test batch
+"""
 
 import SimpleITK as sitk
 import numpy as np
@@ -38,7 +43,6 @@ def extract_real_cubic_from_mhd(dcim_path,annatation_file,plot_output_path,norma
 
     for img_file in file_list:
         mini_df = df_node[df_node["file"]==img_file] #get all nodules associate with file
-        #file_name = str(img_file).split("/")[-1]
         file_name = os.path.basename(img_file)
         if mini_df.shape[0]>0: # some files may not have a nodule--skipping those
             # load the data once
@@ -102,7 +106,6 @@ def extract_fake_cubic_from_mhd(dcim_path,candidate_file,plot_output_path,normal
 
     for img_file in file_list:
         mini_df = df_node[df_node["file"]==img_file] #get all nodules associate with file
-        #file_name = str(img_file).split("/")[-1]
         file_name = os.path.basename(img_file)
         num = 0
         if mini_df.shape[0]>0 and num<10000: # some files may not have a nodule--skipping those

@@ -1,3 +1,14 @@
+"""
+    Reference: 
+        https://stackoverflow.com/questions/25010369/wget-curl-large-file-from-google-drive
+        turdus-merula's answer
+
+    A utility script for helping download large file from google drive
+
+    Usage: python google_drive.py drive_file_id destination_file_path
+"""
+
+from __future__ import print_function
 import requests
 
 def download_file_from_google_drive(id, destination):

@@ -1,14 +1,14 @@
 # -*- coding:utf-8 -*-
-'''
+"""
  the idea of this script came from LUNA2016 champion paper.
- This model conmposed of three network,namely Archi-1(size of 10x10x6),Archi-2(size of 30x30x10),Archi-3(size of 40x40x26)
+ This model composed of three network,namely Archi-1(size of 10x10x6),Archi-2(size of 30x30x10),Archi-3(size of 40x40x26)
 
-'''
+"""
 import tensorflow as tf
 from data_prepare import get_train_batch,get_all_filename,get_test_batch
 import random
 import time
-#import tensorflow.python.debug as tf_debug
+
 class model(object):
 
     def __init__(self,learning_rate,keep_prob,batch_size,epoch):
@@ -104,7 +104,6 @@ class model(object):
             # softmax layer
             real_label = tf.placeholder(tf.float32, [None, 2])
             cross_entropy = tf.reduce_sum(tf.nn.softmax_cross_entropy_with_logits(logits=net_out, labels=real_label))
-            #cross_entropy = -tf.reduce_sum(real_label * tf.log(net_out))
             net_loss = tf.reduce_mean(cross_entropy)
 
             train_step = tf.train.MomentumOptimizer(self.learning_rate, 0.9).minimize(net_loss)

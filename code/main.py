@@ -1,8 +1,7 @@
 # -*- coding:utf-8 -*-
-'''
-this is the enterance of this project
-'''
-
+"""
+	Start entry for training and testing
+"""
 import tensorflow as tf
 import os
 from model2 import model

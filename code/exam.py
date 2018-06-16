@@ -1,3 +1,7 @@
+"""
+	Remove some wrong file
+"""
+
 import SimpleITK as sitk
 import numpy as np
 import csv
@@ -11,11 +15,7 @@ import random
 from PIL import Image
 
 path = '/home/ubuntu/data/train-3d/'
-#path='try/'
 
-'''file_list=glob(path+"*.npy")
-data_x = np.load(file_list[0])
-np.save(path+'try.npy',np.transpose(data_x,(1,2,0)))'''
 file_list=glob(path+"*.npy")
 
 for file in file_list:

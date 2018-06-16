@@ -1,8 +1,8 @@
 """
-Purpose: train a machine learning segmenter that can segment out the nodules on a given 2D patient CT scan slice
-Note:
-- this will train from scratch, with no preloaded weights
-- weights are saved to unet.hdf5 in the specified output folder
+    Purpose: train a machine learning segmenter that can segment out the nodules on a given 2D patient CT scan slice
+    Note:
+    - this will train from scratch, with no preloaded weights
+    - weights are saved to unet.hdf5 in the specified output folder
 """
 
 from __future__ import print_function

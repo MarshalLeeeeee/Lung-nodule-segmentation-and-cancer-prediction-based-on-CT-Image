@@ -1,3 +1,9 @@
+"""
+    Preprocessing for U-net
+    Thresholding and mask the lung part
+    Use annotation to mask the nodules 
+"""
+
 import numpy as np
 import pandas as pd
 import os
@@ -98,10 +104,6 @@ def draw_circles(image,cands,origin,spacing):
 def create_nodule_mask(imagePath, cands, fcount, subsetnum,final_lung_mask,final_nodule_mask):
     #if os.path.isfile(imagePath.replace('original',SAVE_FOLDER_image)) == False:
     img, origin, spacing = load_itk(imagePath)
-    #print(img.shape)
-    #print(origin)
-    #print(spacing)
-
     #calculate resize factor
     RESIZE_SPACING = [1, 1, 1]
     resize_factor = spacing / RESIZE_SPACING
@@ -117,8 +119,6 @@ def create_nodule_mask(imagePath, cands, fcount, subsetnum,final_lung_mask,final
     lung_img = lung_img + 1024
     lung_mask = segment_lung_from_ct_scan(lung_img)
     lung_img = lung_img - 1024
-    #print(lung_img.shape)
-    #exit(0)
 
     #create nodule mask
     nodule_mask = draw_circles(lung_img,cands,origin,new_spacing)
@@ -138,26 +138,7 @@ def create_nodule_mask(imagePath, cands, fcount, subsetnum,final_lung_mask,final
 
         lung_mask_512[z, upper_offset:-lower_offset,upper_offset:-lower_offset] = lung_mask[z,:,:]
         nodule_mask_512[z, upper_offset:-lower_offset,upper_offset:-lower_offset] = nodule_mask[z,:,:]
-        '''if(flag == 0 and np.sum(nodule_mask[z,:,:]) > 0.0):
-                                    i_start = z
-                                    print(i_start)
-                                    flag = 1
-                                if(flag == 1 and np.sum(nodule_mask[z,:,:]) == 0.0):
-                                    i_end = z
-                                    print(i_end)
-                                    flag = 0
-                                    final_lung_mask = np.concatenate((final_lung_mask,lung_mask_512[i_start-1:i_end+1]),axis = 0)
-                                    final_nodule_mask = np.concatenate((final_nodule_mask,nodule_mask_512[i_start-1:i_end+1]),axis = 0)'''
 
-    '''    
-    i=83
-    fig,ax = plt.subplots(2,2,figsize=[8,8])
-    ax[0,0].imshow(lung_mask_512[i],cmap='gray')
-    ax[0,1].imshow(nodule_mask_512[i],cmap='gray')
-    ax[1,0].imshow(lung_mask_512[i]*nodule_mask_512[i],cmap='gray')
-    ax[1,1].imshow(img[32],cmap='gray')
-    plt.show()
-    '''
     # return final_lung_mask,final_nodule_mask
     # save images.
     np.save(os.path.join(OUTPUT_PATH,"lung_mask_%04d_%04d.npy" % (subsetnum, fcount)),lung_mask_512)
@@ -177,9 +158,6 @@ OUTPUT_PATH = '/home/marshallee/Documents/lung/output'
 
 final_lung_mask = np.zeros((1,512,512))
 final_nodule_mask = np.zeros((1,512,512))
-
-#LUNA_DATA_PATH = '/home/ubuntu/data/'
-#OUTPUT_PATH = '/home/ubuntu/data/train_pre'
 
 # create a list of subsets, which are lists of file paths
 FILE_LIST = []
@@ -209,12 +187,3 @@ print(final_nodule_mask.shape)
 np.save(os.path.join(OUTPUT_PATH,'final_lung_mask.npy'),final_lung_mask)
 np.save(os.path.join(OUTPUT_PATH,'final_nodule_mask.npy'),final_nodule_mask)
 
-'''for i in range(len(final_lung_mask)):
-    fig,ax = plt.subplots(2,2,figsize=[8,8])
-    ax[0,0].imshow(final_lung_mask[i],cmap='gray')
-    ax[0,1].imshow(final_nodule_mask[i],cmap='gray')
-    ax[1,0].imshow(final_lung_mask[i]*final_nodule_mask[i],cmap='gray')
-    plt.show()'''
-
-#print(final_lung_mask[1:].shape)
-    

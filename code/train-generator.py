@@ -17,7 +17,6 @@ from keras.optimizers import SGD
 from keras.callbacks import ModelCheckpoint, LearningRateScheduler
 from keras import backend as K
 
-#WORKING_PATH = "/home/marshallee/Documents/lung/output/"
 
 TRAIN_PATH = '/home/ubuntu/data/train_pre/'
 VAL_PATH = '/home/ubuntu/data/val_pre/'
@@ -140,21 +139,6 @@ def train_generator(batch_size):
     
     data_pred = np.load(TEST_PATH+'final_lung_mask_9.npy').reshape([1007,1,512,512])
     nodule_true = np.load(TEST_PATH+'final_nodule_mask_9.npy').reshape([1007,1,512,512])
-
-    '''
-    nodule_pred = model.predict(data_pred)
-
-    fig,ax = plt.subplots(2,2,figsize=[8,8])
-    ax[0,0].imshow(data_pred[0],cmap='gray')
-    ax[0,1].imshow(nodule_true[0],cmap='gray')
-    ax[1,0].imshow(data_pred[0]*nodule_true[0],cmap='gray')
-    plt.show()
-
-    fig,ax = plt.subplots(2,2,figsize=[8,8])
-    ax[0,0].imshow(data_pred[0],cmap='gray')
-    ax[0,1].imshow(nodule_pred[0],cmap='gray')
-    ax[1,0].imshow(data_pred[0]*nodule_pred[0],cmap='gray')
-    '''
 
     print(model.evaluate(data_pred,nodule_true,batch_size=2,verbose=1))
 
